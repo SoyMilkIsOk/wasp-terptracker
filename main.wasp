@@ -1,0 +1,149 @@
+app TerpTracker {
+  db: {
+    system: PostgreSQL
+  },
+  wasp: {
+    version: "^0.10.6"
+  },
+  
+  title: "TerpTracker",
+
+  auth: {
+    userEntity: User,
+    methods: {
+      usernameAndPassword: {}
+    },
+    onAuthFailedRedirectTo: "/login"
+  },
+
+  dependencies: [
+    ("react-clock", "3.0.0")
+  ]
+}
+
+
+// Views
+
+route RootRoute { path: "/", to: MainPage }
+
+page MainPage {
+  authRequired: true,
+  component: import Main from "@client/MainPage.jsx"
+}
+
+route SignUpRoute { path: "/signup", to: SignUpPage }
+
+page SignUpPage {
+  component: import SignUp from "@client/SignUpPage.jsx"
+}
+
+route LoginRoute { path: "/login", to: LoginPage }
+
+page LoginPage {
+  component: import Login from "@client/LoginPage.jsx"
+}
+
+
+// Entity definitions
+
+entity User {=psl
+  id Int @id @default(autoincrement())
+  username String @unique
+  password String
+  reviews Review[]
+psl=}
+
+entity Producer {=psl
+  id Int @id @default(autoincrement())
+  name String
+  location String
+  contact String
+  strains Strain[]
+psl=}
+
+entity Strain {=psl
+  id Int @id @default(autoincrement())
+  name String
+  producer Producer @relation(fields: [producerId], references: [id])
+  producerId Int
+  batchDate DateTime
+  effectType String
+  productType String
+  dominantFlavors String
+  terpeneResults String
+  reviews Review[]
+psl=}
+
+entity Review {=psl
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+  rating Float
+  comment String
+  strain Strain @relation(fields: [strainId], references: [id])
+  strainId Int
+psl=}
+
+// Queries and Actions for Producer entities
+
+query getProducers {
+  fn: import { getProducers } from "@server/queries.js",
+  entities: [Producer]
+}
+
+action createProducer {
+  fn: import { createProducer } from "@server/actions.js",
+  entities: [Producer]
+}
+
+action updateProducer {
+  fn: import { updateProducer } from "@server/actions.js",
+  entities: [Producer]
+}
+
+action deleteProducer {
+  fn: import { deleteProducer } from "@server/actions.js",
+  entities: [Producer]
+}
+
+// Queries and Actions for Strain entities
+query getStrains {
+  fn: import { getStrains } from "@server/queries.js",
+  entities: [Strain]
+}
+
+action createStrain {
+  fn: import { createStrain } from "@server/actions.js",
+  entities: [Strain]
+}
+
+action updateStrain {
+  fn: import { updateStrain } from "@server/actions.js",
+  entities: [Strain]
+}
+
+action deleteStrain {
+  fn: import { deleteStrain } from "@server/actions.js",
+  entities: [Strain]
+}
+
+// Queries and Actions for Review entities
+query getReviews {
+  fn: import { getReviews } from "@server/queries.js",
+  entities: [Review]
+}
+
+action createReview {
+  fn: import { createReview } from "@server/actions.js",
+  entities: [Review]
+}
+
+action updateReview {
+  fn: import { updateReview } from "@server/actions.js",
+  entities: [Review]
+}
+
+action deleteReview {
+  fn: import { deleteReview } from "@server/actions.js",
+  entities: [Review]
+}
