@@ -5,7 +5,7 @@ app TerpTracker {
   wasp: {
     version: "^0.10.6"
   },
-  
+
   title: "TerpTracker",
 
   auth: {
@@ -43,6 +43,30 @@ page LoginPage {
   component: import Login from "@client/LoginPage.jsx"
 }
 
+route ProducerRoute { path: "/producer/:id", to: ProducerPage }
+
+page ProducerPage {
+  component: import Producer from "@client/ProducerPage.jsx"
+}
+
+route addProducerRoute { path: "/add-producer", to: AddProducerPage }
+
+page AddProducerPage {
+  component: import AddProducer from "@client/AddProducerPage.jsx"
+}
+
+route StrainRoute { path: "/strain/:id", to: StrainPage }
+
+page StrainPage {
+  component: import Strain from "@client/StrainPage.jsx"
+}
+
+route addStrainRoute { path: "/add-strain", to: AddStrainPage }
+
+page AddStrainPage {
+  component: import AddStrain from "@client/AddStrainPage.jsx"
+}
+
 
 // Entity definitions
 
@@ -51,26 +75,26 @@ entity User {=psl
   username String @unique
   password String
   reviews Review[]
+  birthday DateTime @default(now())
 psl=}
 
 entity Producer {=psl
   id Int @id @default(autoincrement())
   name String
-  location String
-  contact String
+  location String @default("Unknown")
+  contact String @default("Unknown")
   strains Strain[]
+  rating Float @default(0)
 psl=}
 
 entity Strain {=psl
   id Int @id @default(autoincrement())
-  name String
+  name String 
   producer Producer @relation(fields: [producerId], references: [id])
   producerId Int
-  batchDate DateTime
-  effectType String
+  batchDate DateTime @default(now())
   productType String
-  dominantFlavors String
-  terpeneResults String
+  THC Float @default(0)
   reviews Review[]
 psl=}
 
@@ -78,8 +102,8 @@ entity Review {=psl
   id Int @id @default(autoincrement())
   user User @relation(fields: [userId], references: [id])
   userId Int
-  rating Float
-  comment String
+  rating Float @default(0)
+  comment String @default("No comment")
   strain Strain @relation(fields: [strainId], references: [id])
   strainId Int
 psl=}

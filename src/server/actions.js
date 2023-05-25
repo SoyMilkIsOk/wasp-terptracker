@@ -4,14 +4,25 @@ import HttpError from '@wasp/core/HttpError.js'
 export const createProducer = async (args, context) => {
     if (!context.user) { throw new HttpError(401) }
     return context.entities.Producer.create({
-        data: { ...args.data }
+        data : {
+            name: args.name,
+            location: args.location,
+            contact: args.contact,
+        }
     })
 }
 
 export const createStrain = async (args, context) => {
     if (!context.user) { throw new HttpError(401) }
     return context.entities.Strain.create({
-        data: { ...args.data, producer: { connect: { id: args.data.producerId } } }
+        data: {
+            name: args.name,
+            productType: args.type,
+            producer: { connect: { id: args.producerId } },
+            batchDate: args.batchDate,
+            THC: args.THC,
+        }
+
     })
 }
 
