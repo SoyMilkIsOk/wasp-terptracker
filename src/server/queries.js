@@ -2,7 +2,7 @@
 import HttpError from '@wasp/core/HttpError.js'
 
 export const getProducer = async (args, context) => {
-    return context.entities.Producer.findOne({
+    return context.entities.Producer.findUnique({
         where: { id: args.id }
     })
 }
@@ -13,7 +13,7 @@ export const getProducers = async (args, context) => {
 
 export const getStrains = async (args, context) => {
     return context.entities.Strain.findMany({
-        where: { producer: { id: args.producerId } }
+        where: { producer: { id: args.id } }
     })
 }
 

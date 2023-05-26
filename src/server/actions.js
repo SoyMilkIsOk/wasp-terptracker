@@ -14,11 +14,12 @@ export const createProducer = async (args, context) => {
 
 export const createStrain = async (args, context) => {
     if (!context.user) { throw new HttpError(401) }
+    console.log(args)
     return context.entities.Strain.create({
         data: {
             name: args.name,
             productType: args.type,
-            producer: { connect: { id: args.producerId } },
+            producer: { connect: { id: args.producerID } },
             batchDate: args.batchDate,
             THC: args.THC,
         }

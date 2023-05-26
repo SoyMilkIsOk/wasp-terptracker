@@ -43,10 +43,13 @@ page LoginPage {
   component: import Login from "@client/LoginPage.jsx"
 }
 
+// Producer routes
+
 route ProducerRoute { path: "/producer/:id", to: ProducerPage }
 
 page ProducerPage {
   component: import Producer from "@client/ProducerPage.jsx"
+
 }
 
 route addProducerRoute { path: "/add-producer", to: AddProducerPage }
@@ -54,6 +57,8 @@ route addProducerRoute { path: "/add-producer", to: AddProducerPage }
 page AddProducerPage {
   component: import AddProducer from "@client/AddProducerPage.jsx"
 }
+
+// Strain routes
 
 route StrainRoute { path: "/strain/:id", to: StrainPage }
 
@@ -90,7 +95,7 @@ psl=}
 entity Strain {=psl
   id Int @id @default(autoincrement())
   name String 
-  producer Producer @relation(fields: [producerId], references: [id])
+  producer Producer @relation(fields: [producerId], references: [id], onDelete: Cascade) 
   producerId Int
   batchDate DateTime @default(now())
   productType String
@@ -109,6 +114,11 @@ entity Review {=psl
 psl=}
 
 // Queries and Actions for Producer entities
+
+query getProducer {
+  fn: import { getProducer } from "@server/queries.js",
+  entities: [Producer]
+} 
 
 query getProducers {
   fn: import { getProducers } from "@server/queries.js",
