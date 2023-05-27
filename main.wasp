@@ -72,11 +72,26 @@ page AddStrainPage {
   component: import AddStrain from "@client/AddStrainPage.jsx"
 }
 
+// Review routes
+
+route ReviewRoute { path: "/review/:id", to: ReviewPage }
+
+page ReviewPage {
+  component: import Review from "@client/ReviewPage.jsx"
+}
+
+route addReviewRoute { path: "/add-review/:id", to: AddReviewPage }
+
+page AddReviewPage {
+  component: import AddReview from "@client/AddReviewPage.jsx"
+
+}
+
 
 // Entity definitions
 
-entity User {=psl
-  id Int @id @default(autoincrement())
+entity User {=psl @@unique([id, username])
+  id Int @id @default(autoincrement()) 
   username String @unique
   password String
   reviews Review[]
@@ -105,11 +120,12 @@ psl=}
 
 entity Review {=psl
   id Int @id @default(autoincrement())
-  user User @relation(fields: [userId], references: [id])
-  userId Int
+  user User @relation(fields: [userId,username], references: [id,username], onDelete: Cascade)
+  userId Int @default(0)
+  username String @default("Unknown")
   rating Float @default(0)
   comment String @default("No comment")
-  strain Strain @relation(fields: [strainId], references: [id])
+  strain Strain @relation(fields: [strainId], references: [id], onDelete: Cascade)
   strainId Int
 psl=}
 
@@ -141,6 +157,12 @@ action deleteProducer {
 }
 
 // Queries and Actions for Strain entities
+
+query getStrain {
+  fn: import { getStrain } from "@server/queries.js",
+  entities: [Strain]
+}
+
 query getStrains {
   fn: import { getStrains } from "@server/queries.js",
   entities: [Strain]
@@ -162,6 +184,12 @@ action deleteStrain {
 }
 
 // Queries and Actions for Review entities
+
+query getReview {
+  fn: import { getReview } from "@server/queries.js",
+  entities: [Review]
+}
+
 query getReviews {
   fn: import { getReviews } from "@server/queries.js",
   entities: [Review]
@@ -180,4 +208,11 @@ action updateReview {
 action deleteReview {
   fn: import { deleteReview } from "@server/actions.js",
   entities: [Review]
+}
+
+// Queries and Actions for User entities
+
+query getUser {
+  fn: import { getUser } from "@server/queries.js",
+  entities: [User]
 }

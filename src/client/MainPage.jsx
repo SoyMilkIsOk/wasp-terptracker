@@ -71,7 +71,9 @@ const Strain = (props) => {
       <h3 className="text-lg font-semibold">{props.strain.name}</h3>
       <p>{props.strain.type}</p>
       <p className='rating'>{props.strain.rating}</p>
+      <Link to={`/strain/${props.strain.id}`}>
       <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">See Reviews</button>
+      </Link>
 
     </div>
   )

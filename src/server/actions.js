@@ -30,7 +30,12 @@ export const createStrain = async (args, context) => {
 export const createReview = async (args, context) => {
     if (!context.user) { throw new HttpError(401) }
     return context.entities.Review.create({
-        data: { ...args.data, strain: { connect: { id: args.data.strainId } }, user: { connect: { id: context.user.id } } }
+        data: { 
+            user: { connect: { id: context.user.id } },
+            strain: { connect: { id: args.strainID } },
+            rating: args.rating,
+            comment: args.comment,
+        }
     })
 }
 
