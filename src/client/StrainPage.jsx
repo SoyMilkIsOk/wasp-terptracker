@@ -11,7 +11,7 @@ const StrainPage = (props) => {
     const { data: strain, isFetching, error } = useQuery(getStrain, {id: parseInt(props.match.params.id)})
     const { data: reviews, isFetching_reviews, error_reviews } = useQuery(getReviews, {id: parseInt(props.match.params.id)})
     return (
-        <div className='flex flex-col items-center justify-center h-screen py-16'>
+        <div className='flex flex-col items-center justify-center h-min-screen py-16'>
             <div className="p-6 max-w-sm w-full bg-white shadow-md rounded-md">
             <Header />
             {isFetching && 'Fetching...'}

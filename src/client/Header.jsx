@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import terpTrackerLogo from './terptracker-logo.png'
+import terpTrackerLogo from './img/terptracker-logo.png'
 
 const Header = () => {
 

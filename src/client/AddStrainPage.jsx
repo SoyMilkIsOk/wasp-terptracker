@@ -5,7 +5,7 @@ import Header from './Header.jsx'
 
 const AddStrainPage = () => {
     return (
-        <div className="flex flex-col items-center justify-center h-screen py-16">
+        <div className="flex flex-col items-center justify-center min-h-screen py-16">
             <main className="p-6 max-w-sm w-full bg-white shadow-md rounded-md">
                 <Header />
                 <div className="flex justify-center items-center">
