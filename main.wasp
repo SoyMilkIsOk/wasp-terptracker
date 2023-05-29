@@ -15,7 +15,6 @@ app TerpTracker {
     },
     onAuthFailedRedirectTo: "/login"
   },
-
   dependencies: [
     ("react-clock", "3.0.0")
   ]
@@ -24,12 +23,27 @@ app TerpTracker {
 
 // Views
 
-route RootRoute { path: "/", to: MainPage }
+route TerpHuntRoute { path: "/terp-hunt", to: TerpHunt }
 
-page MainPage {
-  authRequired: true,
-  component: import Main from "@client/MainPage.jsx"
+page TerpHunt {
+  component: import TerpHunt from "@client/TerpHuntPage.jsx"
 }
+
+//temp under construction page
+
+route RootRoute { path: "/", to: UnderConstruction }
+
+page UnderConstruction {
+  component: import UnderConstruction from "@client/UnderConstructionPage.jsx"
+}
+
+
+// route RootRoute { path: "/", to: MainPage }
+
+// page MainPage {
+//   authRequired: true,
+//   component: import Main from "@client/MainPage.jsx"
+// }
 
 route SignUpRoute { path: "/signup", to: SignUpPage }
 
@@ -48,6 +62,7 @@ page LoginPage {
 route ProducerRoute { path: "/producer/:id", to: ProducerPage }
 
 page ProducerPage {
+  authRequired: true,
   component: import Producer from "@client/ProducerPage.jsx"
 
 }
@@ -55,6 +70,7 @@ page ProducerPage {
 route addProducerRoute { path: "/add-producer", to: AddProducerPage }
 
 page AddProducerPage {
+  authRequired: true,
   component: import AddProducer from "@client/AddProducerPage.jsx"
 }
 
@@ -63,12 +79,14 @@ page AddProducerPage {
 route StrainRoute { path: "/strain/:id", to: StrainPage }
 
 page StrainPage {
+  authRequired: true,
   component: import Strain from "@client/StrainPage.jsx"
 }
 
 route addStrainRoute { path: "/add-strain", to: AddStrainPage }
 
 page AddStrainPage {
+  authRequired: true,
   component: import AddStrain from "@client/AddStrainPage.jsx"
 }
 
@@ -77,14 +95,15 @@ page AddStrainPage {
 route ReviewRoute { path: "/review/:id", to: ReviewPage }
 
 page ReviewPage {
+  authRequired: true,
   component: import Review from "@client/ReviewPage.jsx"
 }
 
 route addReviewRoute { path: "/add-review/:id", to: AddReviewPage }
 
 page AddReviewPage {
+  authRequired: true,
   component: import AddReview from "@client/AddReviewPage.jsx"
-
 }
 
 

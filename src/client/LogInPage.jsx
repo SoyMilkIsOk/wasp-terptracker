@@ -18,9 +18,9 @@ const LoginPage = () => {
           <Header />
           <LoginForm appearance={appearance} />
           <br />
-          <span>
+          {/* <span>
             I don't have an account yet (<Link to="/signup">go to signup</Link>).
-          </span>
+          </span> */}
         </main>
       </div>
     </>
