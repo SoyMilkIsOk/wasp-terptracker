@@ -1,5 +1,6 @@
 // @server/actions.js
 import HttpError from '@wasp/core/HttpError.js'
+import { getStrains } from "./queries.js"
 
 export const createProducer = async (args, context) => {
     if (!context.user) { throw new HttpError(401) }
@@ -85,3 +86,59 @@ export const deleteReview = async (args, context) => {
         where: { id: args.id }
     })
 }
+
+// write action to update producer rating when a new review is created for a strain related to that producer
+export const updateProducerRating = async (args, context) => {
+    if (!context.user) {
+        throw new HttpError(401);
+    }
+
+    console.log(args);
+
+    if (!args.producerID) {
+        throw new Error("Producer ID is missing");
+    }
+
+    // console.log("Producer ID:", args.producerID);
+
+    const { data: strains, isFetching, error } = useQuery(getStrains, { id: args.producerID })
+
+    if (isFetching) {
+        console.log("Fetching strains...");
+    }
+
+    if (error) {
+        throw new Error("Error fetching strains");
+    }
+
+    console.log("Strains:", strains);
+
+    let totalReviews = 0;
+    let totalRating = 0;
+    strains.forEach((strain) => {
+        strain.reviews.forEach((review) => {
+            totalReviews += 1;
+            totalRating += review.rating;
+        });
+    });
+
+    if (totalReviews === 0) {
+        throw new Error("No reviews found");
+    }
+
+    let newRating = totalRating / totalReviews;
+    console.log("New rating:", newRating);
+
+    let updatedProducer;
+    try {
+        updatedProducer = await context.entities.Producer.update({
+            where: { id: args.producerID },
+            data: { rating: newRating },
+        });
+    } catch (error) {
+        console.error("Error updating producer:", error);
+        throw error;
+    }
+
+    return updatedProducer;
+};

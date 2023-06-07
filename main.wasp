@@ -16,10 +16,10 @@ app TerpTracker {
     onAuthFailedRedirectTo: "/login"
   },
   dependencies: [
-    ("react-clock", "3.0.0")
+    ("react-clock", "3.0.0"),
+    ("react-icons", "^4.9.0")
   ]
 }
-
 
 // Views
 
@@ -37,13 +37,27 @@ page UnderConstruction {
   component: import UnderConstruction from "@client/UnderConstructionPage.jsx"
 }
 
+// redirect all pages other than these to 404 page
 
-// route RootRoute { path: "/", to: MainPage }
+// route NotFoundRoute { path: "/*", to: NotFoundPage }
 
-// page MainPage {
-//   authRequired: true,
-//   component: import Main from "@client/MainPage.jsx"
+// page NotFoundPage {
+//   component: import NotFoundPage from "@client/NotFoundPage.jsx"
 // }
+
+route ErrorRoute { path: "/404", to: Error404Page }
+
+page Error404Page {
+  component: import Error404Page from "@client/Error404Page.jsx"
+}
+
+
+route RootRoute { path: "/main", to: MainPage }
+
+page MainPage {
+  authRequired: true,
+  component: import Main from "@client/MainPage.jsx"
+}
 
 route SignUpRoute { path: "/signup", to: SignUpPage }
 
@@ -175,6 +189,11 @@ action deleteProducer {
   entities: [Producer]
 }
 
+action updateProducerRating {
+  fn: import { updateProducerRating } from "@server/actions.js",
+  entities: [Producer]
+}
+
 // Queries and Actions for Strain entities
 
 query getStrain {
@@ -228,6 +247,7 @@ action deleteReview {
   fn: import { deleteReview } from "@server/actions.js",
   entities: [Review]
 }
+
 
 // Queries and Actions for User entities
 

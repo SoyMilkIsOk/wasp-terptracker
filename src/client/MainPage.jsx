@@ -28,15 +28,14 @@ const MainPage = () => {
             </Link>
           </div>
         </div>
-        <div className='top-growers w-3/4'>
+        <div className='mt-4 top-growers w-3/4'>
           <h2 className="text-2xl font-bold text-left">Top Producers</h2>
           {producers && <TopProducers producers={producers} />}
         </div>
-        <div className='top-strains w-3/4'>
+        <div className='mt-2 top-strains w-3/4'>
           <h2 className="text-2xl font-bold text-left">Top Strains</h2>
           {strains && <TopStrains strains={strains} />}
         </div>
-        <button onClick={logout} className='logout mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full'> Logout </button>
       </main>
     </div>
   )
@@ -50,9 +49,9 @@ const Producer = (props) => {
     <div className='flex flex-row items-center justify-between space-x-4 p-4 m-4 bg-gray-100 rounded shadow'>
       <h3 className="text-lg font-semibold">{props.producer.name}</h3>
       <p>{props.producer.location}</p>
-      <p className='rating'>{props.producer.rating}</p>
+      <p className='rating'>{props.producer.rating} ⭐️</p>
       <Link to={`/producer/${props.producer.id}`}>
-      <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">See Strains</button>
+      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">See Strains</button>
       </Link>
 
     </div>
@@ -69,10 +68,10 @@ const Strain = (props) => {
   return (
     <div className='flex flex-row items-center justify-between space-x-4 p-4 m-4 bg-gray-100 rounded shadow'>
       <h3 className="text-lg font-semibold">{props.strain.name}</h3>
-      <p>{props.strain.type}</p>
+      <p>{props.strain.THC}%</p>
       <p className='rating'>{props.strain.rating}</p>
       <Link to={`/strain/${props.strain.id}`}>
-      <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">See Reviews</button>
+      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">See Reviews</button>
       </Link>
 
     </div>

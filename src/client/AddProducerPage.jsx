@@ -7,7 +7,7 @@ const AddProducerPage = () => {
         <div className="flex flex-col items-center justify-center h-screen py-16">
             <main className="p-6 max-w-sm w-full bg-white shadow-md rounded-md">
                 <Header />
-                <div className="flex justify-center items-center">
+                <div className="m-4 flex justify-center items-center">
                     <span className="text-gray-700 font-semibold text-2xl">Add New Producer</span>
                 </div>
                 <AddProducerForm />
@@ -31,7 +31,7 @@ const AddProducerForm = () => {
         }
     }
     return (
-        <form className="grid grid-cols-1 gap-6 mt-4" onSubmit={handleSubmit}>
+        <form className="grid grid-cols-1 gap-6" onSubmit={handleSubmit}>
             <label>
                 <span className="text-gray-700">Name</span>
                 <input className="mt-1 p-2.5 h-12 block w-full rounded-md bg-gray-100" type="text" name="prodName" />

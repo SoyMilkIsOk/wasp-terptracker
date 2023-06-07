@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import Header from './Header.jsx'
 import { LoginForm } from '@wasp/auth/forms/Login'
+import terpTrackerLogo from './img/terptracker-logo.png'
 
 const appearance = {
   colors: {
@@ -15,7 +15,9 @@ const LoginPage = () => {
     <>
       <div className="flex flex-col items-center justify-center min-h-1/2 my-16">
         <main className="p-6 max-w-md w-full bg-white shadow-md rounded-md">
-          <Header />
+          <Link to='/'>
+            <img className="w-32 h-32 ml-5" src={terpTrackerLogo} alt="terptracker" />
+          </Link>
           <LoginForm appearance={appearance} />
           <br />
           {/* <span>

@@ -30,6 +30,9 @@ export const getProducer = async (args, context) => {
 // Strain Queries
 
 export const getStrains = async (args, context) => {
+    console.log(context);
+    console.log(context.entities);
+    console.log(context.entities.Strain);
     return context.entities.Strain.findMany({
         where: { producer: { id: args.id } }
     })
